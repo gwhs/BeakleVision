@@ -2,7 +2,6 @@
 
 Scouting web app for FRC Team 5507
 
-
 ## Setup For Students
 
 In order to properly setup your development environment you'll need to do a few things in VS Code
