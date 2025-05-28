@@ -1,7 +1,4 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:frontend/counterwidget.dart';
 import 'package:frontend/fullcounterwidget.dart';
 
 class Mainpage extends StatelessWidget {

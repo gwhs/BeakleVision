@@ -18,9 +18,12 @@ int counter = 0;
 	mainAxisAlignment: MainAxisAlignment.center,
 	children: [
 	TextButton(onPressed: (){
+	if (counter-- == 0) {
+		  counter = counter;}
+	else {
 	setState(() {
 		  counter--;
-		});
+		});}
 	}, child: Text("-")),
 	Text("$counter"),
 	TextButton(onPressed: (){
