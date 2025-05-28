@@ -1,5 +1,7 @@
 from typing import List, TypedDict
 
+from enumTypes import MatchType, MatchWinner
+
 class TeamDict(TypedDict):
     Address: str | None
     City: str | None
@@ -71,6 +73,6 @@ class AllianceDict(TypedDict):
 
 class MatchDict(TypedDict):
     Alliances: List[AllianceDict] | None
-    winner: str | None
+    winner: MatchWinner
     Match_num: int | None
-    Comp_level: str | None
+    Comp_level: MatchType
