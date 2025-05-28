@@ -24,13 +24,45 @@ int counter = 0;
 	setState(() {
 		  counter--;
 		});}
-	}, child: Text("-")),
+	}, 
+
+	style: TextButton.styleFrom(
+	backgroundColor: Colors.red,
+	shape: RoundedRectangleBorder(
+	borderRadius: BorderRadius.only(
+	topLeft: Radius.circular(100),
+	bottomLeft: Radius.circular(100)
+	)
+	)
+	),
+	child: Text(
+	"-",
+	textScaler: TextScaler.linear(1.5),
+	style: TextStyle(color: Colors.black),
+	),
+	),
+	Padding(padding: EdgeInsets.all(4)),
 	Text("$counter"),
+	Padding(padding: EdgeInsets.all(4)),
 	TextButton(onPressed: (){
 	setState(() {
 		  counter++;
 		});
-	}, child: Text("+"))
+	}, 
+	style: TextButton.styleFrom(
+	backgroundColor: Colors.red,
+	shape: RoundedRectangleBorder(
+	borderRadius: BorderRadius.only(
+	topRight: Radius.circular(100),
+	bottomRight: Radius.circular(100)
+	)
+	)
+	),
+	child: Text(
+	"+",
+	style: TextStyle(color: Colors.black),
+	textScaler: TextScaler.linear(1.5),
+	))
 	],
 	);
   }

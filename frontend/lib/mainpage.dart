@@ -22,13 +22,16 @@ class Mainpage extends StatelessWidget {
 			mainAxisAlignment: MainAxisAlignment.center,
 			children: [
 			Fullcounterwidget(title: "Auton L1"),
+			Padding(padding: EdgeInsets.only(right: 10)),
 			Fullcounterwidget(title: "Auton L2",)
 			],
 			),
+
 			Row(
 			mainAxisAlignment: MainAxisAlignment.center,
 			children: [
 			Fullcounterwidget(title: "Auton L3"),
+			Padding(padding: EdgeInsets.only(right: 10)),
 			Fullcounterwidget(title: "Auton L4",)
 			],
 			)

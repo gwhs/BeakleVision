@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:frontend/counterwidget.dart';
+import 'package:frontend/titlewidget.dart';
 
 class Fullcounterwidget extends StatelessWidget {
 	final title;
@@ -11,7 +10,7 @@ class Fullcounterwidget extends StatelessWidget {
   Widget build(BuildContext context) {
 	return Column(
 	children: [
-		Text(title),
+		Tittle(text: title),
 		Counter(key: counterState)
 	],
 	) ;
