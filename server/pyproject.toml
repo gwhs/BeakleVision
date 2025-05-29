@@ -2,7 +2,7 @@
 name = "beaklevision"
 version = "0.1.0"
 description = "FRC scouting server for 5507"
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.10,<4.0"
 
 [tool.pyright]
 exclude = [
