@@ -1,6 +1,6 @@
 # BeakleVision
 
-Scouting web app for FRC Team 5507
+Scouting app for FRC Team 5507
 
 ## Setup For Backend
 
