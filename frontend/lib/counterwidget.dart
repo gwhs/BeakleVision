@@ -15,7 +15,10 @@ int counter = 0;
 	return Row(
 	mainAxisAlignment: MainAxisAlignment.center,
 	children: [
-	TextButton(onPressed: (){
+	SizedBox(
+	width: 50,
+	height: 35,
+	child: TextButton(onPressed: (){
 	if (counter-- == 0) {
 		  counter = counter;}
 	else {
@@ -28,46 +31,50 @@ int counter = 0;
 	backgroundColor: Colors.red,
 	shape: RoundedRectangleBorder(
 	borderRadius: BorderRadiusGeometry.only(
-	bottomLeft: Radius.circular(100),
-	topLeft: Radius.circular(100)
+	bottomLeft: Radius.circular(25),
+	topLeft: Radius.circular(25)
 	),
 	)
 	),
 	child: Text(
 	"-",
-	textScaler: TextScaler.linear(1.75),
+	textScaler: TextScaler.linear(1.25),
 	style: TextStyle(color: Colors.black),
 	),
-	),
+	)),
 	Padding(padding: EdgeInsets.only(right: 5)),
 	Text(
 	"$counter",
-	textScaler: TextScaler.linear(1.5),
+	textScaler: TextScaler.linear(1.25),
 	),
 	Padding(padding: EdgeInsets.only(right: 5)),
-	TextButton(onPressed: (){
+	SizedBox(
+	width: 50,
+	height: 35,
+	child: TextButton(onPressed: (){
 	setState(() {
 		  counter++;
 		});
 	}, 
 	child: Text(
 	"+",
-	textScaler: TextScaler.linear(1.5),
+	textScaler: TextScaler.linear(1.25),
 	style: TextStyle(color: Colors.black),
 	),
-	style: TextButton.styleFrom(
-	backgroundColor: Colors.red,
-	shape: RoundedRectangleBorder(
-	borderRadius: BorderRadiusGeometry.only(
-	topRight: Radius.circular(100),
+	style: TextButton.styleFrom( 
+	backgroundColor: Colors.red, 
+	shape: RoundedRectangleBorder( 
+	borderRadius: BorderRadiusGeometry.only( 
+	topRight: Radius.circular(100), 
 	bottomRight: Radius.circular(100)
 	)
 	)
 	),
 	)
+	)
 	],
 	);
-  }
+	}
 
   int getcount() {
   return counter;
