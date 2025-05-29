@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class Counter extends StatefulWidget {
@@ -29,40 +27,44 @@ int counter = 0;
 	style: TextButton.styleFrom(
 	backgroundColor: Colors.red,
 	shape: RoundedRectangleBorder(
-	borderRadius: BorderRadius.only(
-	topLeft: Radius.circular(100),
-	bottomLeft: Radius.circular(100)
-	)
+	borderRadius: BorderRadiusGeometry.only(
+	bottomLeft: Radius.circular(100),
+	topLeft: Radius.circular(100)
+	),
 	)
 	),
 	child: Text(
 	"-",
-	textScaler: TextScaler.linear(1.5),
+	textScaler: TextScaler.linear(1.75),
 	style: TextStyle(color: Colors.black),
 	),
 	),
-	Padding(padding: EdgeInsets.all(4)),
-	Text("$counter"),
-	Padding(padding: EdgeInsets.all(4)),
+	Padding(padding: EdgeInsets.only(right: 5)),
+	Text(
+	"$counter",
+	textScaler: TextScaler.linear(1.5),
+	),
+	Padding(padding: EdgeInsets.only(right: 5)),
 	TextButton(onPressed: (){
 	setState(() {
 		  counter++;
 		});
 	}, 
+	child: Text(
+	"+",
+	textScaler: TextScaler.linear(1.5),
+	style: TextStyle(color: Colors.black),
+	),
 	style: TextButton.styleFrom(
 	backgroundColor: Colors.red,
 	shape: RoundedRectangleBorder(
-	borderRadius: BorderRadius.only(
+	borderRadius: BorderRadiusGeometry.only(
 	topRight: Radius.circular(100),
 	bottomRight: Radius.circular(100)
 	)
 	)
 	),
-	child: Text(
-	"+",
-	style: TextStyle(color: Colors.black),
-	textScaler: TextScaler.linear(1.5),
-	))
+	)
 	],
 	);
   }
