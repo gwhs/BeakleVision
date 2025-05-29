@@ -16,8 +16,8 @@ int counter = 0;
 	mainAxisAlignment: MainAxisAlignment.center,
 	children: [
 	SizedBox(
-	width: 50,
-	height: 35,
+	width: 30,
+	height: 25,
 	child: TextButton(onPressed: (){
 	if (counter-- == 0) {
 		  counter = counter;}
@@ -36,11 +36,7 @@ int counter = 0;
 	),
 	)
 	),
-	child: Text(
-	"-",
-	textScaler: TextScaler.linear(1.25),
-	style: TextStyle(color: Colors.black),
-	),
+	child: Icon(Icons.remove, color: Colors.black,),
 	)),
 	Padding(padding: EdgeInsets.only(right: 5)),
 	Text(
@@ -49,18 +45,13 @@ int counter = 0;
 	),
 	Padding(padding: EdgeInsets.only(right: 5)),
 	SizedBox(
-	width: 50,
-	height: 35,
+	width: 35,
+	height: 25,
 	child: TextButton(onPressed: (){
 	setState(() {
 		  counter++;
 		});
 	}, 
-	child: Text(
-	"+",
-	textScaler: TextScaler.linear(1.25),
-	style: TextStyle(color: Colors.black),
-	),
 	style: TextButton.styleFrom( 
 	backgroundColor: Colors.red, 
 	shape: RoundedRectangleBorder( 
@@ -70,6 +61,7 @@ int counter = 0;
 	)
 	)
 	),
+	child: Icon(Icons.add, color: Colors.black,),
 	)
 	)
 	],

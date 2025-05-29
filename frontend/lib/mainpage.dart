@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/fullcounterwidget.dart';
+import 'package:frontend/misswidget.dart';
+import 'package:frontend/togglebutton.dart';
 
 class Mainpage extends StatelessWidget {
 	const Mainpage({super.key});
-
 	@override
 	  Widget build(BuildContext context) {
 	  
@@ -26,25 +27,26 @@ class Mainpage extends StatelessWidget {
 			Fullcounterwidget(title: "Auton L2",)
 			],
 			),
-
+			Misswidget(),
 			Row(
 			mainAxisAlignment: MainAxisAlignment.center,
 			children: [
 			Fullcounterwidget(title: "Auton L3"),
-
 			Padding(padding: EdgeInsets.only(right: 10)),
 			Fullcounterwidget(title: "Auton L4",)
 			],
 			),
-			Padding(padding: EdgeInsets.all(10)),
+			Misswidget(),
+			Padding(padding: EdgeInsets.all(5)),
 			Row(
 			mainAxisAlignment: MainAxisAlignment.center,
 			children: [
-			Fullcounterwidget(title: "Teleop L2"),
+			Fullcounterwidget(title: "Teleop L1"),
 			Padding(padding: EdgeInsets.only(right: 10)),
 			Fullcounterwidget(title: "Teleop L2")
 			],
 			),
+			Misswidget(),
 			Row(
 			mainAxisAlignment: MainAxisAlignment.center,
 			children: [
@@ -53,16 +55,15 @@ class Mainpage extends StatelessWidget {
 			Fullcounterwidget(title: "Teleop L4",)
 			],	
 			),
-			Padding(padding: EdgeInsets.all(10)),
+			Misswidget(),
 			Row(
 			mainAxisAlignment: MainAxisAlignment.center,
 			children: [
 			Fullcounterwidget(title: "Algae Processor"),
-			Padding(padding: EdgeInsets.only(right: 10)),
 			Fullcounterwidget(title: "Algae Barge")
 			],
 			),
-			Padding(padding: EdgeInsetsGeometry.all(10)),
+			Misswidget(),
 			Row(
 			mainAxisAlignment: MainAxisAlignment.center,
 			children: [
@@ -71,10 +72,14 @@ class Mainpage extends StatelessWidget {
 			Fullcounterwidget(title: "Fouls")
 			],
 			),
-			Padding(padding: EdgeInsetsGeometry.all(2)),			Center(child: Text("Defense", textScaler: TextScaler.linear(1.5),),),
-			Center(child: Checkbox(value: false, onChanged: (bool? val){}),)
+			Togglebutton()
 			],
 		)
+		),
+		floatingActionButton: FloatingActionButton(onPressed: (){
+		debugPrint("Upload");
+		},
+		child: Text("Done", style: TextStyle(color: Colors.black),),
 		),
 		);	  
 }
