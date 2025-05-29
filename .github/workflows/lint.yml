@@ -12,7 +12,7 @@ jobs:
   server:
     name: Check (Server)
     runs-on: ubuntu-24.04
-    
+
     steps:
       - name: Checkout Repository  
         uses: actions/checkout@v4
@@ -24,8 +24,8 @@ jobs:
 
       - name: Check for types
         run: |
-          pyright server
+          pyright server/src
 
       - name: Check server
         run: |
-          ruff check server
+          ruff check server/src
