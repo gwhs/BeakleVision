@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/config.dart';
 import 'package:frontend/counterwidget.dart';
 import 'package:frontend/fullcounterwidget.dart';
+import 'package:frontend/logic/sendtobackend.dart';
 import 'package:frontend/misswidget.dart';
 import 'package:frontend/togglebutton.dart';
 
@@ -20,7 +21,7 @@ class Mainpage extends StatelessWidget {
 	final GlobalKey<CounterState> TL2 = GlobalKey<CounterState>();
 	final GlobalKey<CounterState> TL3 = GlobalKey<CounterState>();
 	final GlobalKey<CounterState> TL4 = GlobalKey<CounterState>();
-	final GlobalKey<CounterState> TL1M = GlobalKey<CounterState>();
+	final GlobalKey<CounterState> TL1M = GlobalKey<CounterState>(); 
 	final GlobalKey<CounterState> TL2M = GlobalKey<CounterState>();
 	final GlobalKey<CounterState> TL3M = GlobalKey<CounterState>();
 	final GlobalKey<CounterState> TL4M = GlobalKey<CounterState>();
@@ -106,7 +107,7 @@ class Mainpage extends StatelessWidget {
 		)
 		),
 		floatingActionButton: FloatingActionButton(onPressed: (){
-		config.getip();
+		Sendtobackend.sendtoback(getallfields());
 		},
 		child: Text("Done", style: TextStyle(color: Colors.black),),
 		),
@@ -114,7 +115,6 @@ class Mainpage extends StatelessWidget {
 }
 
 Map<String, dynamic> getallfields() {
-
 	int? al1 = AL1.currentState?.getcount();
 	int? al1m = AL1M.currentState?.getcount();
 	int? al2 = AL2.currentState?.getcount();
@@ -128,6 +128,7 @@ Map<String, dynamic> getallfields() {
 	int? tl2 = TL2.currentState?.getcount();
 	int? tl2m = TL2M.currentState?.getcount();
 	int? tl3 = TL3.currentState?.getcount();
+	int? tl3m = TL3M.currentState?.getcount();
 	int? tl4 = TL4.currentState?.getcount();
 	int? tl4m = TL4M.currentState?.getcount();
 	int? algp = ALGP.currentState?.getcount();
@@ -136,7 +137,29 @@ Map<String, dynamic> getallfields() {
 	int? algbm = ALGBM.currentState?.getcount();
 	int? speed = Speed.currentState?.getcount();
 	int? fouls = Fouls.currentState?.getcount();
-	return {};
+	return {
+	"AL1": al1,
+	"AL1M": al1m,
+	"AL2": al2,
+	"AL2M": al2m,
+	"AL3": al3,
+	"AL3M": al3m,
+	"AL4": al4,
+	"AL4M": al4m,
+	"TL1": tl1,
+	"TL1M": tl1m,
+	"TL2": tl2,
+	"TL2M": tl2m,
+	"TL3": tl3,
+	"TL3M": tl3m,
+	"TL4": tl4,
+	"TL4M": tl4m,
+	"ALGP": algp,
+	"ALGPM": algpm,
+	"ALGB": algb,
+	"ALGBM": algbm,
+	"Fouls": fouls,
+	"Speed": speed
+	};
 }
-
 }
