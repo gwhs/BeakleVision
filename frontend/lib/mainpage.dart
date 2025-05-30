@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/config.dart';
 import 'package:frontend/counterwidget.dart';
 import 'package:frontend/fullcounterwidget.dart';
 import 'package:frontend/misswidget.dart';
@@ -105,10 +106,37 @@ class Mainpage extends StatelessWidget {
 		)
 		),
 		floatingActionButton: FloatingActionButton(onPressed: (){
-		debugPrint("Upload");
+		config.getip();
 		},
 		child: Text("Done", style: TextStyle(color: Colors.black),),
 		),
 		);	  
 }
+
+Map<String, dynamic> getallfields() {
+
+	int? al1 = AL1.currentState?.getcount();
+	int? al1m = AL1M.currentState?.getcount();
+	int? al2 = AL2.currentState?.getcount();
+	int? al2m = AL2M.currentState?.getcount();
+	int? al3 = AL3.currentState?.getcount();
+	int? al3m = AL3M.currentState?.getcount();
+	int? al4 = AL4.currentState?.getcount();
+	int? al4m = AL4M.currentState?.getcount();
+	int? tl1 = TL1.currentState?.getcount();
+	int? tl1m = TL1M.currentState?.getcount();
+	int? tl2 = TL2.currentState?.getcount();
+	int? tl2m = TL2M.currentState?.getcount();
+	int? tl3 = TL3.currentState?.getcount();
+	int? tl4 = TL4.currentState?.getcount();
+	int? tl4m = TL4M.currentState?.getcount();
+	int? algp = ALGP.currentState?.getcount();
+	int? algpm = ALGPM.currentState?.getcount();
+	int? algb = ALGB.currentState?.getcount();
+	int? algbm = ALGBM.currentState?.getcount();
+	int? speed = Speed.currentState?.getcount();
+	int? fouls = Fouls.currentState?.getcount();
+	return {};
+}
+
 }
