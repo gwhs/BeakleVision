@@ -17,9 +17,12 @@ class ToggleButtonState extends State<Togglebutton> {
           onPressed: () => setState(() => _flag = !_flag),
           child: Text(_flag ? '!Defense' : 'Defense', style: TextStyle(color: Colors.black),),
           style: ElevatedButton.styleFrom(
-            backgroundColor: _flag ? Colors.red : Colors.green, // This is what you need!
+            backgroundColor: _flag ? Colors.red : Colors.green,
           ),
         );
   }
 
+bool getState() {
+return _flag;
+}
 }

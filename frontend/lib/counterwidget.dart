@@ -8,7 +8,9 @@ class Counter extends StatefulWidget {
 }
 
 class CounterState extends State<Counter> {
-int counter = 0;
+var counter = 0;
+
+	CounterState();
 @override
   Widget build(BuildContext context) {
   
