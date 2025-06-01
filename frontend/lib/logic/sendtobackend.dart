@@ -7,8 +7,10 @@ class Sendtobackend {
 static Future<void> sendtoback(Map<String, dynamic> data) async {
 	final dat = jsonEncode(data);
 
+	var ip = config.getip();
 	final resp = await http.post(
-	Uri.parse(config.getip()),
+
+	Uri.parse("$ip/match"),
 	headers: {'Content-Type': 'application/json'},	
 	body: dat
 	);
