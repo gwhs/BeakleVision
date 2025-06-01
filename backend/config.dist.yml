@@ -1,0 +1,21 @@
+# This holds the configuration for the backend of BeakleVision. This file is not settable during runtime.
+# If you wish to change the values, change and save, and restart your server
+
+beakle:
+
+  # Host that the server will use.
+  # Set to 0.0.0.0 if running in Docker
+  host: "localhost"
+
+  # Port that the server binds to.
+  # Defaults to 8000
+  port: 8000
+
+api_keys:
+
+  # TBA API Key
+  tba: ""
+
+# CockrocahDB connection URI used for connections
+# CockroachDB uses the PostgreSQL connection scheme (https://www.cockroachlabs.com/docs/stable/connection-parameters#connect-using-a-url) for connecting
+cockroach_uri: "postgresql+asyncpg://user:password@localhost:5432/user"

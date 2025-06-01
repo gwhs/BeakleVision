@@ -1,0 +1,10 @@
+pre-commit:
+  commands:
+    ruff-check:
+      glob: "backend/src/*.py"
+      stage_fixed: true
+      run: ruff check {staged_files} --fix --exit-non-zero-on-fix
+    ruff-fmt:
+      glob: "backend/src/*.py"
+      stage_fixed: true
+      run: ruff format {staged_files}

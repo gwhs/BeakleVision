@@ -1,0 +1,33 @@
+name: Lint
+on:
+  push:
+    branches: [dev]
+      
+  pull_request:
+    branches: [dev]
+    paths: [backend/**]
+
+jobs:
+  server:
+    name: Check (Server)
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout Repository  
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          pip install "pyright[nodejs]>=1.1.401,<2" "ruff>=0.11.11,<1" -r backend/requirements.txt
+
+      - name: Check for types
+        run: |
+          pyright backend/src
+
+      - name: Check backend
+        run: |
+          ruff check backend/src

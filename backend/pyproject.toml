@@ -1,0 +1,52 @@
+[project]
+name = "beaklevision"
+version = "0.1.0"
+description = "FRC scouting server for 5507"
+requires-python = ">=3.10,<4.0"
+
+[tool.pyright]
+exclude = [
+    "**/__pycache__", 
+]
+reportMissingImports = true
+typeCheckingMode = "basic"
+reportUnnecessaryTypeIgnoreComment = "warning"
+
+[tool.ruff]
+line-length = 88
+extend-exclude = ["**/__pycache__"]
+
+[tool.ruff.lint]
+ignore = [
+    "E501", 
+    "N999", 
+    "E402", 
+    "S311", 
+    "ASYNC109",
+    "S101",
+    
+    # These are recommended by Ruff if the formatter is to be used: https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
+    "W191",
+    "E111",
+    "E114",
+    "E117",
+    "D206",
+    "D300",
+    "Q000",
+    "Q001",
+    "Q002",
+    "Q003",
+    "COM812",
+    "COM819",
+    "ISC001",
+    "ISC002"
+    ]
+select = ["E", "F", "N", "ASYNC", "S", "ERA", "I"]
+fixable = ["ALL"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-wrap-aliases = true
+
+[tool.ruff.format]
+docstring-code-format = true
