@@ -186,3 +186,8 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+# YAML-based configuration
+#  This is used for storing configuration information for the backend
+config.yml
+config.yaml

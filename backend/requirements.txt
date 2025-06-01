@@ -9,3 +9,5 @@ SQLAlchemy>=2.0.41,<3
 sqlalchemy-cockroachdb>=2.0.2,<3
 numpy>=2.2.6,<3
 scipy>=1.15.3,<2
+PyYAML>=6.0.2,<7
+orjson>=3.10.18,<4

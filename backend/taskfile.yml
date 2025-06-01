@@ -1,0 +1,22 @@
+version: "3"
+
+tasks:
+  db-up:
+    preconditions:
+      - test -f docker/docker-compose.dev.yml
+    cmds:
+      - docker compose -f docker/docker-compose.dev.yml up -d
+
+  db-stop:
+    preconditions:
+      - test -f docker/docker-compose.dev.yml
+    cmds:
+      - docker compose -f docker/docker-compose.dev.yml stop
+
+  start:
+    aliases:
+      - dev
+      - up
+    cmds:
+      - uvicorn main:app --app-dir=src --reload
+    silent: true
