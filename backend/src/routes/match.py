@@ -1,6 +1,8 @@
+from types.match import Match
+
 from fastapi import APIRouter
 from pydantic import BaseModel
-from types.match import Match
+
 router = APIRouter()
 
 class UploadResponse(BaseModel):

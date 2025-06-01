@@ -1,5 +1,6 @@
-from fastapi import APIRouter
 from os import cpu_count
+
+from fastapi import APIRouter
 from pydantic import BaseModel
 
 router = APIRouter()
