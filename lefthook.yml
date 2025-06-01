@@ -1,2 +1,2 @@
 extends:
-  - server/lefthook.yml
+  - backend/lefthook.yml
