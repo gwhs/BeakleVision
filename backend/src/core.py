@@ -14,6 +14,7 @@ if os.name == "nt":
     from winloop import new_event_loop, run
 else:
     from uvloop import new_event_loop, run
+
 __title__ = "BeakleVision"
 __description__ = """Docs
 """
