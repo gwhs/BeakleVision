@@ -1,14 +1,12 @@
-from typing import Any
-
-from fastapi import FastAPI, status
-from fastapi.openapi.utils import get_openapi
-from fastapi.responses import ORJSONResponse
 import os
 import signal
 import socket
-from typing import Optional
+from typing import Any, Optional
 
 import uvicorn
+from fastapi import FastAPI, status
+from fastapi.openapi.utils import get_openapi
+from fastapi.responses import ORJSONResponse
 
 from utils.handler import InterruptHandler
 
@@ -20,6 +18,7 @@ __title__ = "BeakleVision"
 __description__ = """Docs
 """
 __version__ = "0.1.0a"
+
 
 # Wrapper around uvicorn.Server to handle uvloop/winloop
 class UvicornServer(uvicorn.Server):
