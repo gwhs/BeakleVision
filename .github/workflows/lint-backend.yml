@@ -2,14 +2,15 @@ name: Lint
 on:
   push:
     branches: [dev]
+    paths: [backend/**]
       
   pull_request:
     branches: [dev]
     paths: [backend/**]
 
 jobs:
-  server:
-    name: Check (Server)
+  backend:
+    name: Check (Backend)
     runs-on: ubuntu-24.04
 
     steps:
@@ -20,6 +21,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
+
       - name: Install dependencies
         run: |
           pip install "pyright[nodejs]>=1.1.401,<2" "ruff>=0.11.11,<1" -r backend/requirements.txt
