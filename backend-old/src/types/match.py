@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 
-# We don't want to modify data, so freeze it 
-class Match(BaseModel, frozen=True):
+class Match(BaseModel):
     # Key:
     # A = Auton
     # T = Teleop

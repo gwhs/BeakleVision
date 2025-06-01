@@ -1,5 +1,6 @@
 fastapi>=0.115.12,<1
 uvicorn>=0.34.0,<1
+gunicorn>=23.0.0,<24
 httptools>=0.6.4,<1
 uvloop>=0.21.0,<1 ; sys_platform != "win32"
 winloop>=0.1.8,<1 ; sys_platform == "win32"

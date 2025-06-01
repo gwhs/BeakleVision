@@ -1,10 +1,15 @@
-from fastapi import FastAPI
-from uvicorn import run
+from pathlib import Path
 
-app = FastAPI() # we should only one instance of fastapi
+from core import BeakleVision
+import uvicorn
 
-@app.get('/')
-def root():
-    return {"GO": "away"}
+app = BeakleVision()
 
-run(app, port=8000)
+if __name__ == "__main__":
+    config = uvicorn.Config(
+        "main:app",
+        access_log=True,
+    )
+
+    server = uvicorn.Server(config)
+    server.run()
