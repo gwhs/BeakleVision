@@ -6,8 +6,7 @@ plugins {
 }
 
 android {
-    outputFileName = "BeakleVision-1.0.0.apk"
-    namespace = "org.BeakleVision.frontend"
+   namespace = "org.beaklevision.frontend"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
