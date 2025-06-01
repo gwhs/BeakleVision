@@ -16,8 +16,7 @@ else:
     from uvloop import new_event_loop, run
 
 __title__ = "BeakleVision"
-__description__ = """Docs
-"""
+__description__ = """Docs"""
 __version__ = "0.1.0a"
 
 
