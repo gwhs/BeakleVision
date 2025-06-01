@@ -1,6 +1,8 @@
+# ruff: noqa
 from pydantic import BaseModel
 
-# We don't want to modify data, so freeze it 
+
+# We don't want to modify data, so freeze it
 class Match(BaseModel, frozen=True):
     # Key:
     # A = Auton
@@ -15,8 +17,8 @@ class Match(BaseModel, frozen=True):
     AL2M: int
     AL3: int
     AL3M: int
-    AL4: int 
-    AL4M: int 
+    AL4: int
+    AL4M: int
     TL1: int
     TL1M: int
     TL2: int
@@ -32,4 +34,4 @@ class Match(BaseModel, frozen=True):
     TeamNum: int
     Fouls: int
     Defense: bool
-    Speed: int # should be 1 to 5 inclusive
+    Speed: int  # should be 1 to 5 inclusive

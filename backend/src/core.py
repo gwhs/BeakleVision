@@ -1,7 +1,8 @@
-from fastapi import FastAPI, status
 from typing import Any
-from fastapi.responses import ORJSONResponse
+
+from fastapi import FastAPI, status
 from fastapi.openapi.utils import get_openapi
+from fastapi.responses import ORJSONResponse
 
 __title__ = "BeakleVision"
 __description__ = """Docs
@@ -15,12 +16,14 @@ import socket
 from typing import Optional
 
 import uvicorn
+
 from utils.handler import InterruptHandler
 
 if os.name == "nt":
     from winloop import new_event_loop, run
 else:
     from uvloop import new_event_loop, run
+
 
 # Wrapper around uvicorn.Server to handle uvloop/winloop
 class UvicornServer(uvicorn.Server):
@@ -34,7 +37,8 @@ class UvicornServer(uvicorn.Server):
         self.loop.add_signal_handler(signal.SIGINT, handler)
         self.loop.add_signal_handler(signal.SIGTERM, handler)
         return run(self.serve(sockets=sockets))
-    
+
+
 class BeakleVision(FastAPI):
     def __init__(self):
         super().__init__(
@@ -46,7 +50,7 @@ class BeakleVision(FastAPI):
             redoc_url="/docs",
             docs_url=None,
         )
-        
+
     def openapi(self) -> dict[str, Any]:
         if not self.openapi_schema:
             self.openapi_schema = get_openapi(

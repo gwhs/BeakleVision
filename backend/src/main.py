@@ -1,7 +1,6 @@
-from pathlib import Path
+import uvicorn
 
 from core import BeakleVision
-import uvicorn
 
 app = BeakleVision()
 
