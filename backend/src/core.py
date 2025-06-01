@@ -3,13 +3,6 @@ from typing import Any
 from fastapi import FastAPI, status
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import ORJSONResponse
-
-__title__ = "BeakleVision"
-__description__ = """Docs
-"""
-__version__ = "0.1.0a"
-
-# Wrapper around uvicorn.Server to handle uvloop/winloop
 import os
 import signal
 import socket
@@ -23,7 +16,10 @@ if os.name == "nt":
     from winloop import new_event_loop, run
 else:
     from uvloop import new_event_loop, run
-
+__title__ = "BeakleVision"
+__description__ = """Docs
+"""
+__version__ = "0.1.0a"
 
 # Wrapper around uvicorn.Server to handle uvloop/winloop
 class UvicornServer(uvicorn.Server):
