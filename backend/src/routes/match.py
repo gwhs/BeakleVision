@@ -8,6 +8,6 @@ router = APIRouter()
 class UploadResponse(BaseModel):
     code: int
 
-@router.post("/match", response_model=UploadResponse)
-def match(match: Match):
+@router.post("/match/create", responses={200: {"model": UploadResponse}})
+async def match(match: Match):
     return UploadResponse(code=200) 
