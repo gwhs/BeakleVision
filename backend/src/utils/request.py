@@ -9,4 +9,4 @@ if TYPE_CHECKING:
 
 
 class RouteRequest(Request):
-    app: BeakleVision
+    app: BeakleVision  # type: ignore

@@ -1,7 +1,7 @@
 from typing import AsyncGenerator
 
-import sqlalchemy
 from fastapi.exceptions import HTTPException
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from utils.request import RouteRequest
@@ -22,10 +22,10 @@ async def session(request: RouteRequest) -> AsyncGenerator[AsyncSession, None]:
     Yields:
         Iterator[AsyncGenerator[AsyncSession, None]]: yields an instance of `AsyncSession`, used for database operations
     """
-    async with request.app.get_session() as session:
+    async with AsyncSession(request.app.engine) as session:
         try:
             yield session
-        except sqlalchemy.exc.IntegrityError:
+        except IntegrityError:
             await session.rollback()
             raise HTTPException(status_code=409, detail="Conflict")
         except Exception:

@@ -1,8 +1,7 @@
 import os
 import signal
 import socket
-from contextlib import asynccontextmanager
-from typing import TYPE_CHECKING, Any, AsyncGenerator, Optional, Self
+from typing import TYPE_CHECKING, Any, Optional
 
 import orjson
 import uvicorn
@@ -11,8 +10,7 @@ from fastapi.exceptions import HTTPException, RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import ORJSONResponse, Response
 from fastapi.utils import is_body_allowed_for_status_code
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.pool import AsyncAdaptedQueuePool
+from sqlalchemy.ext.asyncio import create_async_engine
 
 from utils.config import ServerConfig
 from utils.handler import InterruptHandler
@@ -62,9 +60,15 @@ class BeakleVision(FastAPI):
             http="httptools",
             redoc_url="/docs",
             docs_url=None,
-            lifespan=self.lifespan,
         )
         self.config = config
+
+        self.engine = create_async_engine(
+            config["cockroach_uri"],
+            pool_size=25,
+            max_overflow=20,
+            isolation_level="AUTOCOMMIT",
+        )
 
         self.add_exception_handler(
             HTTPException,
@@ -96,17 +100,6 @@ class BeakleVision(FastAPI):
         return ORJSONResponse(
             content=message.model_dump(), status_code=status.HTTP_400_BAD_REQUEST
         )
-
-    def get_session(self) -> AsyncSession:
-        return AsyncSession(self.engine)
-
-    @asynccontextmanager
-    async def lifespan(self, app: Self) -> AsyncGenerator[None]:
-        pool = AsyncAdaptedQueuePool(pool_size=25, max_overflow=20)
-        async with create_async_engine(
-            self.config["cockroach_uri"], isolation_level="AUTOCOMMIT", pool=pool
-        ) as app.engine:
-            yield
 
     def openapi(self) -> dict[str, Any]:
         if not self.openapi_schema:
