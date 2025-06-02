@@ -1,7 +1,8 @@
 import os
 import signal
 import socket
-from typing import Any, Optional
+from contextlib import asynccontextmanager
+from typing import TYPE_CHECKING, Any, AsyncGenerator, Optional, Self
 
 import orjson
 import uvicorn
@@ -10,6 +11,8 @@ from fastapi.exceptions import HTTPException, RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import ORJSONResponse, Response
 from fastapi.utils import is_body_allowed_for_status_code
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.pool import AsyncAdaptedQueuePool
 
 from utils.config import ServerConfig
 from utils.handler import InterruptHandler
@@ -22,6 +25,9 @@ if os.name == "nt":
     from winloop import new_event_loop, run
 else:
     from uvloop import new_event_loop, run
+
+if TYPE_CHECKING:
+    from sqlalchemy.ext.asyncio import AsyncEngine
 
 __title__ = "BeakleVision"
 __description__ = """Docs"""
@@ -44,6 +50,8 @@ class UvicornServer(uvicorn.Server):
 
 
 class BeakleVision(FastAPI):
+    engine: AsyncEngine
+
     def __init__(self, *, config: ServerConfig):
         super().__init__(
             title=__title__,
@@ -54,6 +62,7 @@ class BeakleVision(FastAPI):
             http="httptools",
             redoc_url="/docs",
             docs_url=None,
+            lifespan=self.lifespan,
         )
         self.config = config
 
@@ -87,6 +96,17 @@ class BeakleVision(FastAPI):
         return ORJSONResponse(
             content=message.model_dump(), status_code=status.HTTP_400_BAD_REQUEST
         )
+
+    def get_session(self) -> AsyncSession:
+        return AsyncSession(self.engine)
+
+    @asynccontextmanager
+    async def lifespan(self, app: Self) -> AsyncGenerator[None]:
+        pool = AsyncAdaptedQueuePool(pool_size=25, max_overflow=20)
+        async with create_async_engine(
+            self.config["cockroach_uri"], isolation_level="AUTOCOMMIT", pool=pool
+        ) as app.engine:
+            yield
 
     def openapi(self) -> dict[str, Any]:
         if not self.openapi_schema:
