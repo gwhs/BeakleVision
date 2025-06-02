@@ -8,14 +8,19 @@ class Counter extends StatefulWidget {
 }
 
 class CounterState extends State<Counter> {
-int counter = 0;
+var counter = 0;
+
+	CounterState();
 @override
   Widget build(BuildContext context) {
   
 	return Row(
 	mainAxisAlignment: MainAxisAlignment.center,
 	children: [
-	TextButton(onPressed: (){
+	SizedBox(
+	width: 30,
+	height: 25,
+	child: TextButton(onPressed: (){
 	if (counter-- == 0) {
 		  counter = counter;}
 	else {
@@ -28,46 +33,42 @@ int counter = 0;
 	backgroundColor: Colors.red,
 	shape: RoundedRectangleBorder(
 	borderRadius: BorderRadiusGeometry.only(
-	bottomLeft: Radius.circular(100),
-	topLeft: Radius.circular(100)
+	bottomLeft: Radius.circular(25),
+	topLeft: Radius.circular(25)
 	),
 	)
 	),
-	child: Text(
-	"-",
-	textScaler: TextScaler.linear(1.75),
-	style: TextStyle(color: Colors.black),
-	),
-	),
+	child: Icon(Icons.remove, color: Colors.black,),
+	)),
 	Padding(padding: EdgeInsets.only(right: 5)),
 	Text(
 	"$counter",
-	textScaler: TextScaler.linear(1.5),
+	textScaler: TextScaler.linear(1.25),
 	),
 	Padding(padding: EdgeInsets.only(right: 5)),
-	TextButton(onPressed: (){
+	SizedBox(
+	width: 35,
+	height: 25,
+	child: TextButton(onPressed: (){
 	setState(() {
 		  counter++;
 		});
 	}, 
-	child: Text(
-	"+",
-	textScaler: TextScaler.linear(1.5),
-	style: TextStyle(color: Colors.black),
-	),
-	style: TextButton.styleFrom(
-	backgroundColor: Colors.red,
-	shape: RoundedRectangleBorder(
-	borderRadius: BorderRadiusGeometry.only(
-	topRight: Radius.circular(100),
+	style: TextButton.styleFrom( 
+	backgroundColor: Colors.red, 
+	shape: RoundedRectangleBorder( 
+	borderRadius: BorderRadiusGeometry.only( 
+	topRight: Radius.circular(100), 
 	bottomRight: Radius.circular(100)
 	)
 	)
 	),
+	child: Icon(Icons.add, color: Colors.black,),
+	)
 	)
 	],
 	);
-  }
+	}
 
   int getcount() {
   return counter;
