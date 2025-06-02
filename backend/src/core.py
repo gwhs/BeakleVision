@@ -1,7 +1,7 @@
 import os
 import signal
 import socket
-from typing import Any, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 import orjson
 import uvicorn
@@ -10,6 +10,7 @@ from fastapi.exceptions import HTTPException, RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import ORJSONResponse, Response
 from fastapi.utils import is_body_allowed_for_status_code
+from sqlalchemy.ext.asyncio import create_async_engine
 
 from utils.config import ServerConfig
 from utils.handler import InterruptHandler
@@ -22,6 +23,9 @@ if os.name == "nt":
     from winloop import new_event_loop, run
 else:
     from uvloop import new_event_loop, run
+
+if TYPE_CHECKING:
+    from sqlalchemy.ext.asyncio import AsyncEngine
 
 __title__ = "BeakleVision"
 __description__ = """Docs"""
@@ -44,6 +48,8 @@ class UvicornServer(uvicorn.Server):
 
 
 class BeakleVision(FastAPI):
+    engine: AsyncEngine
+
     def __init__(self, *, config: ServerConfig):
         super().__init__(
             title=__title__,
@@ -56,6 +62,13 @@ class BeakleVision(FastAPI):
             docs_url=None,
         )
         self.config = config
+
+        self.engine = create_async_engine(
+            config["cockroach_uri"],
+            pool_size=25,
+            max_overflow=20,
+            isolation_level="AUTOCOMMIT",
+        )
 
         self.add_exception_handler(
             HTTPException,

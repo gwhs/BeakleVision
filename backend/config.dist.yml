@@ -17,5 +17,5 @@ api_keys:
   tba: ""
 
 # CockrocahDB connection URI used for connections
-# CockroachDB uses the PostgreSQL connection scheme (https://www.cockroachlabs.com/docs/stable/connection-parameters#connect-using-a-url) for connecting
-cockroach_uri: "postgresql+asyncpg://user:password@localhost:5432/user"
+# See https://github.com/cockroachdb/sqlalchemy-cockroachdb/blob/master/README.asyncpg.md#asyncpg-support
+cockroach_uri: "cockroachdb+asyncpg://root@localhost:26257/defaultdb"
