@@ -33,5 +33,5 @@ def get_cache(data_name, check_json: bool) -> str | None:
     if dat is not None:
         return str(dat)
     else:
-        print("ERR: {data_name} does not exist in valkey cache")
+        print(f"ERR: {data_name} does not exist in valkey cache")
         return None
