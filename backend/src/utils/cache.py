@@ -26,9 +26,9 @@ def set_cache(data: str, title: str, write_json: bool) -> None:
 def get_cache(data_name, check_json: bool) -> str | None:
     check_up()
     if check_json:
-        jsoncache.read_cache_json(data_name)
-    else:
-        pass
+        json_data = jsoncache.read_cache_json(data_name)
+        if json_data is not None:
+            return json_data
     dat = valk.get(data_name)
     if dat is not None:
         return str(dat)
