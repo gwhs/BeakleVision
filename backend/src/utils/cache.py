@@ -1,11 +1,10 @@
 import valkey
-from valkey.client import Valkey
 
 valk = valkey.Valkey()
 
 def check_up() -> bool:
     up = str(valk.ping())
-    if up != None:
+    if up is not None:
         return True
     else:
         print("WARN: valkey might be down")
@@ -19,7 +18,7 @@ def set_cache(data: str, title: str) -> None:
 def get_cache(data_name) -> str | None:
     check_up()
     dat = valk.get(data_name)
-    if dat != None:
+    if dat is not None:
         return str(dat)
     else:
         print("ERR: empty cache")
