@@ -1,35 +1,38 @@
 import jsoncache
 import valkey
 
-valk = valkey.Valkey()
+conn = valkey.Valkey()
 
-def check_up() -> bool:
-    up = str(valk.ping())
-    if up is not None:
-        return True
-    else:
-        print("WARN: valkey might be down")
-        return False
+async def check_up():
+    try:
+        foo = await conn.ping()
+        if not foo:
+            raise ConnectionError
+    except Exception:
+        raise ConnectionError
 
-
-def set_cache(data: str, title: str, write_json: bool) -> None:
-    check_up()
+async def set_cache(data: str, title: str, write_json: bool) -> None | ConnectionError:
+    try:
+     await check_up()
+    except ConnectionError:
+        print("ERR: Valkey is DOWN")
+        exit(1)
     if write_json:
         jsoncache.write_cache_json(data,title)
-    dat = str(valk.set(title,data))
+    dat = str(await conn.set(title,data))
     if dat is None:
         return None
     elif dat is not None:
         print(f"ERR: {title} had an issue when writing to valkey cache")
 
 
-def get_cache(data_name, check_json: bool) -> str | None:
-    check_up()
+async def get_cache(data_name: str, check_json: bool) -> str | None:
+    await check_up()
     if check_json:
         json_data = jsoncache.read_cache_json(data_name)
         if json_data is not None:
             return json_data
-    dat = valk.get(data_name)
+    dat = conn.get(data_name)
     if dat is not None:
         return str(dat)
     else:
