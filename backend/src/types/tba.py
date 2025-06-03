@@ -1,90 +1,142 @@
-from typing import List, TypedDict
+from typing import TypedDict
 
-from enums import MatchType, MatchWinner
+from src.types.enums import EventType, MatchStatus, MatchType, MatchWinner
 
 
 class TeamDict(TypedDict):
-    Address: str | None
-    City: str | None
-    Country: str | None
-    Gmaps_place_id: str | None
-    Gmaps_url: str | None
-    Key: str | None
-    lat: float | None
-    lng: float | None
-    Location_name: str
-    Motto: str | None
-    name: str | None  # this is the name with all the sponsors
-    Nickname: str | None
-    Postal_code: str | None  # only a thing for US teams
-    Rookie_year: int | None
-    School_name: str | None
-    State_prov: (
-        str | None
-    )  # also basically only US teams although maybe it would be the providence of a canadian team
-    Team_number: int | None
-    website: str | None
-
-
-class Webcast(TypedDict):
-    channel: str | None
-    type: str | None
+    """
+    TypedDict that holds team specific information from TBA
+    """
+    team: int
+    name: str
+    rookie_year: int
+    country: str | None
+    state: str | None
+    city: str | None
+    district: str | None
 
 
 class EventDict(TypedDict):
-    Address: str | None
-    City: str | None
-    Country: str | None
-    district: (
-        str | None
-    )  # prob a string but couldn't find an event where it wasn't null
-    Division_keys: (
-        List[str] | None
-    )  # also couldn't find places where it isn't blank but prob list of strings
-    End_date: str | None
-    Event_code: str | None
-    Event_type: int | None
-    Event_type_string: str | None
-    First_event_code: str | None
-    First_event_id: (
-        str | int
-    )  # I would say int but seeing TBA's record of making things that should be ints strings I Don't trust them
-    Gmaps_place_id: str | None
-    Gmaps_url: str | None
-    Key: str | None  # the TBA one
-    lat: float | None
-    lng: float | None
-    Location_name: str | None
-    Name: str | None
-    Parent_event_key: str | None
-    Playoff_type: int | None
-    Playoff_type_string: str | None
-    Postal_code: str | None
-    Short_name: str | None
-    Start_date: str | None
-    State_prov: str | None
-    Timezone: str | None
-    Webcasts: List[Webcast] | None
-    Website: str | None
-    Week: int | None
-    Year: int | None
+    """
+    TypedDict that holds event specific information from TBA.
+    """
+    year: int
+    key: str
+    name: str
+    country: str | None
+    state: str | None
+    city: str | None
+    district: str | None
+    start_date: str
+    end_date: str
+    time: int
+    type: EventType
+    week: int
+    video: str | None
 
 
-class TeamKeys(TypedDict):
-    T1: str | None
-    T2: str | None
-    T3: str | None
-
-
-class AllianceDict(TypedDict):
-    Dq_team_keys: List[str] | None
+class BreakdownDict(TypedDict):
+    """
+    TypedDict that holds match breakdown information that comes with each match 
+    download from TBA. Each match has a match breakdown.
+    
+    The breakdown is different for each season. For more info see the TBA API at 
+    https://www.thebluealliance.com/apidocs/v3 and look at src.tba.breakdown to 
+    see how the API values are converted into values here.
+    """
     score: int | None
-    surrogate_team_keys: List[str] | None
-    Team_keys: TeamKeys | None
+    no_foul_points: int | None
+    foul_points: int | None
+    auto_points: int | None
+    teleop_points: int | None
+    endgame_points: int | None
+    endgame_1: int | None
+    endgame_2: int | None
+    endgame_3: int | None
+    rp_1: bool | None
+    rp_2: bool | None
+    rp_3: bool | None
+    tiebreaker: int | None
+    comp_1: int | float | None
+    comp_2: int | float | None
+    comp_3: int | float | None
+    comp_4: int | float | None
+    comp_5: int | float | None
+    comp_6: int | float | None
+    comp_7: int | float | None
+    comp_8: int | float | None
+    comp_9: int | float | None
+    comp_10: int | float | None
+    comp_11: int | float | None
+    comp_12: int | float | None
+    comp_13: int | float | None
+    comp_14: int | float | None
+    comp_15: int | float | None
+    comp_16: int | float | None
+    comp_17: int | float | None
+    comp_18: int | float | None
 
 
 class MatchDict(TypedDict):
-    Alliances: List[AllianceDict] | None
-    winner: MatchWinner
-    Match_num: int | None
-    Comp_level: MatchType
+    """
+    TypedDict that holds match results from TBA.
+    """
+    event: str
+    key: str
+    match_type: MatchType
+    set_number: int
+    match_number: int
+    status: MatchStatus
+    video: str | None
+    red_1: int
+    red_2: int
+    red_3: int | None
+    red_dq: str
+    red_surrogate: str
+    blue_1: int
+    blue_2: int
+    blue_3: int | None
+    blue_dq: str
+    blue_surrogate: str
+    winner: MatchWinner | None
+    time: int
+    predicted_time: int | None
+    red_score: int | None
+    blue_score: int | None
+    red_score_breakdown: BreakdownDict
+    blue_score_breakdown: BreakdownDict
+
+
+empty_breakdown: BreakdownDict = {
+    "score": 0,
+    "no_foul_points": None,
+    "foul_points": None,
+    "auto_points": None,
+    "teleop_points": None,
+    "endgame_points": None,
+    "endgame_1": None,
+    "endgame_2": None,
+    "endgame_3": None,
+    "rp_1": False,
+    "rp_2": False,
+    "rp_3": False,
+    "tiebreaker": None,
+    "comp_1": None,
+    "comp_2": None,
+    "comp_3": None,
+    "comp_4": None,
+    "comp_5": None,
+    "comp_6": None,
+    "comp_7": None,
+    "comp_8": None,
+    "comp_9": None,
+    "comp_10": None,
+    "comp_11": None,
+    "comp_12": None,
+    "comp_13": None,
+    "comp_14": None,
+    "comp_15": None,
+    "comp_16": None,
+    "comp_17": None,
+    "comp_18": None,
+}
