@@ -1,6 +1,6 @@
 import os
 import pwd
-
+from typing import Any
 import orjson
 
 cache_path = f"{pwd.getpwuid(os.getuid()).pw_dir}/.cache/beaklevision/tba"
@@ -10,7 +10,7 @@ def init_cache() -> None:
     else:
         os.mkdir(cache_path)
 
-def write_cache_json(data: str, title: str) -> None:
+def write_cache_json(data: dict[str,Any], title: str) -> None:
     init_cache()
     try:
         with open(f"{cache_path}/{title}.json", 'x') as file:
@@ -25,7 +25,7 @@ def read_cache_json(title: str) -> str | None:
     init_cache()
     try :
         with open(f"{cache_path}/{title}.json", 'r') as file:
-            dat = file.read()
+            dat = orjson.loads(file.read())
             file.close()
     except FileNotFoundError:
         print(f"ERR: cache file {title}.json not found")
