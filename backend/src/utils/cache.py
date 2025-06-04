@@ -1,8 +1,11 @@
-import jsoncache
-import valkey
-from valkey.exceptions import ConnectionError as ValkeyConnectionError # I HATE THIS STUPID BS WHY ARE THERE MULTIPLE CONNECTION ERRORS ISWTG THIS IS THE STUPIDEST BUG EVER,
 # I SPENT 2 HOURS FIGURING THIS OUT FML
 from typing import Any
+
+import jsoncache
+import valkey
+from valkey.exceptions import (
+    ConnectionError as ValkeyConnectionError,  # I HATE THIS STUPID BS WHY ARE THERE MULTIPLE CONNECTION ERRORS ISWTG THIS IS THE STUPIDEST BUG EVER,
+)
 
 conn = valkey.Valkey()
 

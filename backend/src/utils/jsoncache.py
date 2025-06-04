@@ -1,6 +1,7 @@
 import os
 import pwd
 from typing import Any
+
 import orjson
 
 cache_path = f"{pwd.getpwuid(os.getuid()).pw_dir}/.cache/beaklevision/tba"
