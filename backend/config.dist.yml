@@ -19,3 +19,6 @@ api_keys:
 # CockrocahDB connection URI used for connections
 # See https://github.com/cockroachdb/sqlalchemy-cockroachdb/blob/master/README.asyncpg.md#asyncpg-support
 cockroach_uri: "cockroachdb+asyncpg://root@localhost:26257/defaultdb"
+
+# Valkey connection uri
+valkey_uri: "valkey://localhost:6739/0"
