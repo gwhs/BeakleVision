@@ -1,24 +1,12 @@
-API_URL = "https://www.thebluealliance.com/api/v3/"
 from typing import Any
+import aiohttp
+from yarl import URL
+API_URL = URL("https://www.thebluealliance.com/api/v3/")
 
-import requests
-
-
-def tba_api_call(endpoint: str, etag: str | None = None) -> tuple[Any | bool, str | None]:
-    if etag is not None:
-        data = requests.get(f"{API_URL}/{endpoint}", 
-            headers={
-            "Etag": "",
-            "X-TBA-Auth-Key": "",
-            "If-None-Match": "",
-            },
-            timeout=10
-            )
-        if data.status_code == 304:
-            # no change
-            return ("","foo") # I need the caching pr to be merged so it returns nonesense for now
-
-        if data.status_code == 200:
-            return (data.headers.get("Etag"),data.text)
-    return ("deez", "yk what")
-
+async def tba_api_call(endpoint: str, etag: str | None = None) -> tuple[Any | bool, str | None]:
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"{API_URL}{endpoint}") as response:
+            async with session.get('http://python.org') as response:
+                print(f"CODE: {response.status}")
+                print(f"YAP: {await response.text()}")
+                return ("to", "do")
