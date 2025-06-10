@@ -1,7 +1,8 @@
 import os
 import signal
 import socket
-from typing import TYPE_CHECKING, Any, Optional
+from contextlib import asynccontextmanager
+from typing import TYPE_CHECKING, Any, Optional, Self
 
 import orjson
 import uvicorn
@@ -11,7 +12,9 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.responses import ORJSONResponse, Response
 from fastapi.utils import is_body_allowed_for_status_code
 from sqlalchemy.ext.asyncio import create_async_engine
+from valkey.asyncio import ConnectionPool
 
+from utils.cache.valkey import ValkeyCache
 from utils.config import ServerConfig
 from utils.handler import InterruptHandler
 from utils.responses.exceptions import (
@@ -49,6 +52,7 @@ class UvicornServer(uvicorn.Server):
 
 class BeakleVision(FastAPI):
     engine: AsyncEngine
+    cache: ValkeyCache
 
     def __init__(self, *, config: ServerConfig):
         super().__init__(
@@ -60,6 +64,7 @@ class BeakleVision(FastAPI):
             http="httptools",
             redoc_url="/docs",
             docs_url=None,
+            lifespan=self.lifespan,
         )
         self.config = config
 
@@ -100,6 +105,14 @@ class BeakleVision(FastAPI):
         return ORJSONResponse(
             content=message.model_dump(), status_code=status.HTTP_400_BAD_REQUEST
         )
+
+    ### Server-related utilities
+
+    @asynccontextmanager
+    async def lifespan(self, app: Self):
+        pool = ConnectionPool.from_url(self.config["cockroach_uri"], max_connections=25)
+        async with ValkeyCache(pool=pool) as self.cache:
+            yield
 
     def openapi(self) -> dict[str, Any]:
         if not self.openapi_schema:

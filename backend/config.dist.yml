@@ -21,4 +21,4 @@ api_keys:
 cockroach_uri: "cockroachdb+asyncpg://root@localhost:26257/defaultdb"
 
 # Valkey connection uri
-valkey_uri: "valkey://localhost:6739/0"
+valkey_uri: "valkey://localhost:6739/0?protocol=3"

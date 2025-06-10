@@ -1,16 +1,42 @@
-from typing import Any
+from types import TracebackType
+from typing import Any, Optional, Self, Type, TypeVar
 
 import jsoncache
 import orjson
 import valkey.asyncio as valkey
+from pydantic import BaseModel
+from valkey.asyncio import ConnectionPool, Valkey
+
+BE = TypeVar("BE", bound=BaseException)
 
 conn = valkey.Valkey()
 
-async def set_cache(data: dict[str, Any], title: str, write_json: bool) -> None:
 
+class ValkeyCache:
+    def __init__(self, *, pool: ConnectionPool):
+        self.client = Valkey(connection_pool=pool)
+
+    async def __aenter__(self) -> Self:
+        return self
+
+    async def __aexit__(
+        self,
+        exc_type: Optional[Type[BE]],
+        exc: Optional[BE],
+        traceback: Optional[TracebackType],
+    ) -> None:
+        await self.client.aclose(close_connection_pool=True)
+
+    ### CRUD operations
+
+    async def set(self, data: BaseModel):
+        await self.client.set("")
+
+
+async def set_cache(data: dict[str, Any], title: str, write_json: bool) -> None:
     if write_json:
-       await jsoncache.write_cache_json(data,title)
-    dat = str(await conn.set(title,orjson.dumps(data)))
+        await jsoncache.write_cache_json(data, title)
+    dat = str(await conn.set(title, orjson.dumps(data)))
     if dat is None:
         return None
     elif dat is not None:
