@@ -1,8 +1,9 @@
 from typing import Any
 
-import jsoncache
 import orjson
 import valkey.asyncio as valkey
+
+import src.utils.cache.jsoncache as jsoncache
 
 conn = valkey.Valkey()
 
@@ -18,6 +19,7 @@ async def set_cache(data: dict[str, Any], title: str, write_json: bool) -> None:
 
 
 async def get_cache(data_name: str, check_json: bool) -> str | None:
+    
     if await conn.ping():
         exit(1)
 
