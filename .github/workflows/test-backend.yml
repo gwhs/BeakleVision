@@ -17,6 +17,9 @@ jobs:
       run:
         working-directory: backend
 
+    env:
+      TESTCONTAINER_DOCKER_NETWORK: beaklevision-testcontainers
+
     steps:
       - name: Checkout Repository  
         uses: actions/checkout@v4
@@ -25,6 +28,13 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
+
+      - name: Set up server configuration
+        run: |
+          cp config.dist.yml config.yml
+
+      - name: Create Docker network for running Testcontainers
+        run: sudo docker network create ${{ env.TESTCONTAINER_DOCKER_NETWORK }}
 
       - name: Install dependencies
         run: |
