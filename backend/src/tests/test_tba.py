@@ -1,6 +1,7 @@
-import asyncio
+import pytest
 
-from src.tba.main import tba_api_call
+from core import BeakleVision
+from tba.main import tba_api_call
 
 endpoint = "team/frc5507"
 test_json = {
@@ -25,8 +26,9 @@ test_json = {
 }
 
 
-def test_teams_api_call():
-    tba_json, _ = asyncio.run(tba_api_call(endpoint))
+@pytest.mark.asyncio
+async def test_teams_api_call(app: BeakleVision):
+    tba_json = await tba_api_call(endpoint)
 
     assert type(tba_json) is dict, "TBA API call should return a dictionary"
 
@@ -37,12 +39,13 @@ def test_teams_api_call():
         )
 
 
-def test_teams_api_cached():
-    tba_json, etag = asyncio.run(tba_api_call(endpoint))
+@pytest.mark.asyncio
+async def test_teams_api_cached(app: BeakleVision):
+    tba_json, etag = await tba_api_call(endpoint)
 
     assert type(tba_json) is dict, "TBA API call should return a dictionary"
 
-    cached_json, _ = asyncio.run(tba_api_call(endpoint, etag=etag))
+    cached_json = await tba_api_call(endpoint, etag=etag)
 
     assert cached_json is not False, "Unexpected cache miss"
     assert type(cached_json) is dict, "Cached JSON should be a dictionary"

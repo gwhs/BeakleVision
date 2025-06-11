@@ -1,6 +1,7 @@
-import asyncio
+import pytest
 
-from src.utils.cache.valkey import get_cache, set_cache
+from core import BeakleVision
+from utils.cache.valkey import get_cache, set_cache
 
 endpoint = "team/frc5507"
 test_json = {
@@ -25,11 +26,12 @@ test_json = {
 }
 
 
-def test_cache():
+@pytest.mark.asyncio
+async def test_cache(app: BeakleVision):
     endpoint = "team/frc5507"
 
-    asyncio.run(set_cache(test_json, endpoint, write_json=False))
-    cached_json = asyncio.run(get_cache(endpoint, check_json=False))
+    await set_cache(test_json, endpoint, write_json=False)
+    cached_json = await get_cache(endpoint, check_json=False)
 
     assert cached_json is not False, "Unexpected cache miss"
     assert type(cached_json) is dict, "Cached JSON should be a dictionary"
