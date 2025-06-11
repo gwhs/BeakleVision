@@ -2,11 +2,11 @@ name: Test
 on:
   push:
     branches: [dev]
-    paths: [backend/**]
+    paths: [backend/src/**]
       
   pull_request:
     branches: [dev]
-    paths: [backend/**]
+    paths: [backend/src/**]
 
 jobs:
   backend:
