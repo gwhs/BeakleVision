@@ -50,3 +50,11 @@ force-wrap-aliases = true
 
 [tool.ruff.format]
 docstring-code-format = true
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra"
+testpaths = [
+    "src/tests"
+]
+pythonpath = ["src"]

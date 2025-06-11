@@ -1,16 +1,17 @@
 from typing import Any
 
-import jsoncache
 import orjson
 import valkey.asyncio as valkey
 
+import utils.cache.jsoncache as jsoncache
+
 conn = valkey.Valkey()
 
-async def set_cache(data: dict[str, Any], title: str, write_json: bool) -> None:
 
+async def set_cache(data: dict[str, Any], title: str, write_json: bool) -> None:
     if write_json:
-       await jsoncache.write_cache_json(data,title)
-    dat = str(await conn.set(title,orjson.dumps(data)))
+        await jsoncache.write_cache_json(data, title)
+    dat = str(await conn.set(title, orjson.dumps(data)))
     if dat is None:
         return None
     elif dat is not None:
