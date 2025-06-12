@@ -3,6 +3,7 @@ from typing import Any, Optional, Self, Type, TypeVar
 
 import orjson
 import valkey.asyncio as valkey
+from argon2 import PasswordHasher
 from pydantic import BaseModel
 from valkey.asyncio import ConnectionPool, Valkey
 
@@ -17,6 +18,8 @@ class ValkeyCache:
     def __init__(self, *, pool: ConnectionPool):
         self.client = Valkey(connection_pool=pool)
 
+        self._ph = PasswordHasher()
+
     async def __aenter__(self) -> Self:
         return self
 
@@ -28,10 +31,20 @@ class ValkeyCache:
     ) -> None:
         await self.client.aclose(close_connection_pool=True)
 
+    def _build_key(self, endpoint: str, *, event: str, match: int) -> str:
+        return f"{event}:m{match}:{endpoint}"
+
     ### CRUD operations
 
-    async def set(self, data: BaseModel):
-        await self.client.set("")
+    async def set(
+        self, data: BaseModel, *, endpoint: str, ttl: Optional[int] = 60
+    ) -> Optional[Any]:
+        return await self.client.set(
+            name="", value=orjson.dumps(data.model_dump()), ex=ttl, get=True
+        )
+
+    async def get(self, key: str) -> Optional[Any]:
+        return await self.client.get(key)
 
 
 async def set_cache(data: dict[str, Any], title: str, write_json: bool) -> None:
