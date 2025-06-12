@@ -1,17 +1,24 @@
-name: Lint
+name: Test
 on:
   push:
     branches: [dev]
-    paths: [backend/**]
+    paths: [backend/src/**]
       
   pull_request:
     branches: [dev]
-    paths: [backend/**]
+    paths: [backend/src/**]
 
 jobs:
   backend:
-    name: Check (Backend)
+    name: Test (Backend)
     runs-on: ubuntu-24.04
+
+    defaults:
+      run:
+        working-directory: backend
+
+    env:
+      TESTCONTAINER_DOCKER_NETWORK: beaklevision-testcontainers
 
     steps:
       - name: Checkout Repository  
@@ -22,6 +29,13 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Set up server configuration
+        run: |
+          cp config.dist.yml config.yml
+
+      - name: Create Docker network for running Testcontainers
+        run: sudo docker network create ${{ env.TESTCONTAINER_DOCKER_NETWORK }}
+
       - name: Install dependencies
         run: |
           pip install \
@@ -30,14 +44,8 @@ jobs:
             "pytest-asyncio>=1.0.0,<2" \
             "testcontainers>=4.10.0,<5" \
             "asgi-lifespan>=2.1.0,<3" \
-            "pyright[nodejs]>=1.1.401,<2" \
-            "ruff>=0.11.11,<1" \
-            -r backend/requirements.txt
+            -r requirements.txt
 
-      - name: Check for types
+      - name: Test backend
         run: |
-          pyright backend/src
-
-      - name: Check backend
-        run: |
-          ruff check backend/src
+          pytest

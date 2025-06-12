@@ -34,6 +34,13 @@ class ServerConfig(Generic[_T]):
     def __getitem__(self, item: Any) -> Union[_T, Any]:
         return self._config[str(item)]
 
+    def __setitem__(self, key: Any, value: Union[_T, Any]) -> None:
+        # Prevent replacing other keys for security reasons
+        if str(key) not in ("cockroach_uri", "valkey_uri"):
+            return
+
+        self._config[str(key)] = value
+
     def __len__(self) -> int:
         return len(self._config)
 

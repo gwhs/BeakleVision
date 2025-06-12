@@ -1,13 +1,14 @@
 from types import TracebackType
 from typing import Any, Optional, Self, Type, TypeVar
 
-import jsoncache
 import orjson
 import valkey.asyncio as valkey
 from pydantic import BaseModel
 from valkey.asyncio import ConnectionPool, Valkey
 
 BE = TypeVar("BE", bound=BaseException)
+
+import utils.cache.jsoncache as jsoncache
 
 conn = valkey.Valkey()
 
